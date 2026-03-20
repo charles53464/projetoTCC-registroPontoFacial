@@ -12,7 +12,6 @@ class VideoCamera:
         self.video = cv2.VideoCapture(0)
         self.img_dir = "./tmp"
 
-        # FLAG para saber se acabou de capturar (mantida para lógica interna se necessário)
         self.capturado = False
         
         # Garanta que o diretório tmp seja criado
@@ -60,12 +59,10 @@ class VideoCamera:
             minNeighbors=5
         )
 
-        # Cor da elipse
         cor = (0, 0, 255)
         if len(faces) > 0:
             cor = (0, 255, 0)
 
-        # Elipse central (único elemento visual que restou)
         cv2.ellipse(
             frame,
             (centro_x, centro_y),
@@ -75,9 +72,6 @@ class VideoCamera:
             3
         )
 
-        # O bloco de código da borda cinza (cv2.rectangle) foi removido daqui.
-
-        # Converte para JPEG
         ret, jpeg = cv2.imencode('.jpg', frame)
         return jpeg.tobytes()
 
@@ -102,7 +96,9 @@ class VideoCamera:
         )
 
         for (x, y, w, h) in faces:
+            # RECORTE CORRETO (dentro da ROI)
             cropped_face = roi[y:y+h, x:x+w]
+
             self.capturado = True
             return cropped_face
 
