@@ -16,7 +16,7 @@ bottom_right = (centro_x + lado // 2, centro_y + lado // 2)
 # Cor Verde claro (Formato BGR: Blue=144, Green=238, Red=144)
 cor = (144, 238, 144) 
 
-# Desenhe o quadrado (cv2.rectangle utiliza os dois pontos opostos)s
+# Desenhe o quadrado (cv2.rectangle utiliza os dois pontos opostos)s2
 cv2.rectangle(frame, top_left, bottom_right, cor, 2)
 
 # Exiba a imagem
