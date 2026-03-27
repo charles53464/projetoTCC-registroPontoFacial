@@ -7,7 +7,7 @@ frame = np.zeros((altura, largura, 3), dtype=np.uint8)  # Imagem preta (Canvas)
 
 # Defina os parâmetros da elipse
 centro_x, centro_y = int(largura / 2), int(altura / 2)
-a, b = 140, 180  # Eixos maior e menor
+a, b = 140, 180  # Eixos maior (Y) e menor (X)
 cor = (144, 238, 144)  # Verde claro (formato BGR: Light Green)
 
 # Desenhe a elipse com a cor verde claro
@@ -17,6 +17,6 @@ cv2.ellipse(frame, (centro_x, centro_y), (a, b), 0, 0, 360, cor, 10)
 # Exiba a imagem com a elipse
 cv2.imshow("Elipse Verde Claro", frame)
 
-# Gerenciamento de janelas 
+# Gerenciamento de janelas
 cv2.waitKey(0)
 cv2.destroyAllWindows()

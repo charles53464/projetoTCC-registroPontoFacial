@@ -1,22 +1,23 @@
 import cv2
 import numpy as np
 
-# Defina os parâmetros da imagem (Proporção vertical 480x360)
+# Defina os parâmetros da imagem (Canvas Vertical)
 altura, largura = 480, 360
-frame = np.zeros((altura, largura, 3), dtype=np.uint8)  # Criando o canvas preto
+frame = np.zeros((altura, largura, 3), dtype=np.uint8)  # Criando imagem preta
 
 # Defina os parâmetros do quadrado
-lado = 200  # Comprimento de cada lado
-centro_x, centro_y = int(largura / 2), int(altura / 2)
+lado = 200  # Comprimento do lado
+centro_x, centro_y = int(largura / 2), int(altura / 3)
 
-# Cálculo das coordenadas dos vértices (Superior Esquerdo e Inferior Direito)
+# Cálculo das coordenadas (Canto superior esquerdo e inferior direito)
 top_left = (centro_x - lado // 2, centro_y - lado // 2)
-bottom_right = (centro_x + lado // 2, centro_y + lado // 2)
+bottom_right = (centro_x + lado // 2, centro_y + lado // 1)
 
-# Cor Verde claro (Formato BGR: Blue=144, Green=238, Red=144)
+# Cor Verde claro (Formato BGR)
 cor = (144, 238, 144) 
 
-# Desenhe o quadrado (cv2.rectangle utiliza os dois pontos opostos)
+# Desenhe o quadrado
+# Parâmetros: imagem, ponto1, ponto2, cor, espessura
 cv2.rectangle(frame, top_left, bottom_right, cor, 2)
 
 # Exiba a imagem

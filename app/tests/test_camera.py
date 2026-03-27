@@ -24,26 +24,34 @@ class MainScreen(MDScreen):
         layout.add_widget(self.image)
 
     def load_video(self, *args):
-        ret, frame = self.cap.read()
+        ret, frame = self.cap.read()  # Leitura do frame da câmera
         
         if not ret:
             print("Falha ao capturar o frame")
             return
 
-        # Lógica de desenho da Elipse
+        # Obtém as dimensões do frame capturado
         altura, largura, _ = frame.shape
+
+        # Defina os parâmetros da elipse (Centralizada)
         centro_x, centro_y = int(largura / 2), int(altura / 2)
-        a, b = 140, 180  # Eixos da elipse
-        cor = (144, 238, 144)  # Verde claro em BGR
+        a, b = 140, 180  # Eixos maior (Y) e menor (X)
+        cor = (144, 238, 144)  # Verde claro (em BGR)
 
-        cv2.ellipse(frame, (centro_x, centro_y), (a, b), 0, 0, 360, cor, 2)
+        # Desenhe a elipse diretamente no frame capturado (antes da conversão)
+        cv2.ellipse(frame, (centro_x, centro_y), (a, b), 0, 0, 360, cor, 5)
 
-        # Conversão de OpenCV (BGR) para Kivy (Texture)
+        # Inverte a imagem e converte para o formato de textura do Kivy
+        # O Kivy desenha de baixo para cima, por isso o flip(0) é essencial
         buffer = cv2.flip(frame, 0).tobytes()
+        
+        # Cria a textura com base no tamanho do frame (largura, altura)
         texture = Texture.create(size=(largura, altura), colorfmt="bgr")
+        
+        # Alimenta o buffer na textura
         texture.blit_buffer(buffer, colorfmt="bgr", bufferfmt="ubyte")
         
-        # Aplica a textura ao widget de imagem
+        # Atualiza o widget de imagem na interface
         self.image.texture = texture
 
     def open_camera_for_recognition(self):
