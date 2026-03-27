@@ -17,6 +17,6 @@ cv2.ellipse(frame, (centro_x, centro_y), (a, b), 0, 0, 360, cor, 10)
 # Exiba a imagem com a elipse
 cv2.imshow("Elipse Verde Claro", frame)
 
-# Gerenciamento de janelas 7
+# Gerenciamento de janelas 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
