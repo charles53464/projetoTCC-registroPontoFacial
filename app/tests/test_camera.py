@@ -14,55 +14,55 @@ Window.size = (360, 600)
 
 class MainScreen(MDScreen):
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)  # Chama o construtor da classe Screen
+        super().__init__(**kwargs)
 
         layout = MDBoxLayout(orientation="vertical")
         self.add_widget(layout)
         
-        # Adiciona o widget de imagem
+        # Widget que exibirá os frames da câmera
         self.image = Image()
         layout.add_widget(self.image)
 
     def load_video(self, *args):
-        ret, frame = self.cap.read()  # Leitura do frame do OpenCV
+        ret, frame = self.cap.read()
         
         if not ret:
             print("Falha ao capturar o frame")
             return
 
-        # Inverte a imagem (OpenCV usa BGR e Kivy espera a origem no canto inferior esquerdo)
-        # Converte o frame para bytes para o buffer do Kivy
+        # Lógica de desenho da Elipse
+        altura, largura, _ = frame.shape
+        centro_x, centro_y = int(largura / 2), int(altura / 2)
+        a, b = 140, 180  # Eixos da elipse
+        cor = (144, 238, 144)  # Verde claro em BGR
+
+        cv2.ellipse(frame, (centro_x, centro_y), (a, b), 0, 0, 360, cor, 2)
+
+        # Conversão de OpenCV (BGR) para Kivy (Texture)
         buffer = cv2.flip(frame, 0).tobytes()
-        
-        # Cria a textura com as dimensões do frame (largura, altura)
-        texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt="bgr")
-        
-        # Preenche a textura com os dados do buffer
+        texture = Texture.create(size=(largura, altura), colorfmt="bgr")
         texture.blit_buffer(buffer, colorfmt="bgr", bufferfmt="ubyte")
         
-        # Atualiza o widget de imagem com a nova textura
+        # Aplica a textura ao widget de imagem
         self.image.texture = texture
 
     def open_camera_for_recognition(self):
-        # Remove a mensagem (Opcional)
+        # Limpa labels antigos da tela
         for widget in self.children:
             if isinstance(widget, MDLabel):
                 self.remove_widget(widget)
                 
-        # Iniciar captura de vídeo
-        self.cap = cv2.VideoCapture(0)  # index 0
+        self.cap = cv2.VideoCapture(0)
         
         if self.cap.isOpened():
-            print("Mostrando a câmera")
-            # Chama a função para carregar o vídeo
+            print("Câmera iniciada com sucesso")
+            # Agenda a atualização do frame (60 FPS)
             Clock.schedule_interval(self.load_video, 1.0 / 60.0)
-            print("Abriu a camera")
         else:
             print("Falha ao abrir a câmera")
 
 class ScreenManagerApp(ScreenManager):
     def open_camera_for_recognition(self):
-        # Chama o método de MainScreen para abrir a câmera
         self.get_screen('main').open_camera_for_recognition()
 
 class MainApp(MDApp):
