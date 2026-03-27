@@ -12,7 +12,7 @@ cor = (144, 238, 144)  # Verde claro (formato BGR: Light Green)
 
 # Desenhe a elipse com a cor verde claro
 # Parâmetros: imagem, centro, eixos, ângulo de rotação, ângulo inicial, ângulo final, cor, espessura
-cv2.ellipse(frame, (centro_x, centro_y), (a, b), 0, 0, 360, cor, 2)
+cv2.ellipse(frame, (centro_x, centro_y), (a, b), 0, 0, 360, cor, 10)
 
 # Exiba a imagem com a elipse
 cv2.imshow("Elipse Verde Claro", frame)
