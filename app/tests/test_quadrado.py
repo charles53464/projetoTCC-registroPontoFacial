@@ -18,7 +18,7 @@ cor = (144, 238, 144)
 
 # Desenhe o quadrado
 # Parâmetros: imagem, ponto1, ponto2, cor, espessura
-cv2.rectangle(frame, top_left, bottom_right, cor, 2)
+cv2.rectangle(frame, top_left, bottom_right, cor, 27)
 
 # Exiba a imagem
 cv2.imshow("Quadrado Verde Claro", frame)
