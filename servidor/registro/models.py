@@ -2,7 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from random import randint
-
+from django.db import models
 
 class Funcionario(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
@@ -42,3 +42,10 @@ class Treinamento(models.Model):
         model = self.__class__
         if model.objects.exclude(id=self.id).exists():
             raise ValidationError('Só pode haver um arquivo salvo.')
+        
+class RegistroFuncionario(models.Model):
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
+    data_hora = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.funcionario.nome} - {self.data_hora}"

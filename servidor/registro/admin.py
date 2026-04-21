@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Funcionario, ColetaFaces, Treinamento
+from .models import (Funcionario, ColetaFaces, RegistroFuncionario, Treinamento)
 
 
 class ColetaFacesInline(admin.StackedInline):
@@ -14,3 +14,4 @@ class FuncionarioAdmin(admin.ModelAdmin):
 
 admin.site.register(Funcionario, FuncionarioAdmin)
 admin.site.register(Treinamento)
+admin.site.register(RegistroFuncionario)

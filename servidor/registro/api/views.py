@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from registro.api.serializers import FuncionarioSerializer, TreinamentoSerializer
-from registro.models import Funcionario, Treinamento
+from registro.api.serializers import FuncionarioSerializer, TreinamentoSerializer ,RegistroFuncionarioSerializer
+from registro.models import Funcionario, Treinamento ,RegistroFuncionario
 
 
 class FuncionarioViewSet(viewsets.ModelViewSet):
@@ -11,3 +11,7 @@ class FuncionarioViewSet(viewsets.ModelViewSet):
 class TreinamentoViewSet(viewsets.ModelViewSet):
     queryset = Treinamento.objects.all()
     serializer_class = TreinamentoSerializer
+
+class RegistroFuncionarioViewSet(viewsets.ModelViewSet):
+    queryset = RegistroFuncionario.objects.all()
+    serializer_class = RegistroFuncionarioSerializer
